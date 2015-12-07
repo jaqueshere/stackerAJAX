@@ -48,7 +48,8 @@ var showAnswerer = function(user) {
 
 	//Show user's link
 	var userLink = result.find('.answerer-link');
-	userLink.text(user.user.link)
+	userLink.attr('href', user.user.link);
+	userLink.text(user.user.link);
 
 	return result;
 };
