@@ -33,11 +33,7 @@ var showQuestion = function(question) {
 
 var showAnswerer = function(user) {
 	var result = $('.templates .answerer').clone();
-	console.log(user.user.display_name);
-	console.log(user.post_count);
-	console.log(user.score);
-	console.log(user.user.link);
-
+	
 	//Show user's display name
 	var userHandle = result.find('.display-name');
 	userHandle.text(user.user.display_name);
@@ -120,14 +116,16 @@ var getAnswerer = function(tags) {
 		type: "GET",
 	})
 	.done(function(result) {
-		console.log(result);
+		var searchResults = showSearchResults(request.tag, result.items.length);
+
+		$('.search-results').html(searchResults);
 		$.each(result.items, function(i, item) {
 			var person = showAnswerer(item);
-			console.log(person);
 			$('.results').append(person);
 		});
-	}).fail(function() {
-		console.log("sorry");
+	}).fail(function(jqXHR, error) {
+		var errorElem = showError(error);
+		$('.search-results').append(errorElem);
 	});
 };
 
